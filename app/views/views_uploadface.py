@@ -26,7 +26,6 @@ class UploadFaceHandler(CommonHandler):
         if not os.path.exists(upload_path):
             os.mkdir(upload_path)
 
-        original_face = os.path.join(upload_path, self.user.face)
         img = self.request.files["img"][0]
 
         # 检测上传的文件是否是图片
@@ -50,29 +49,30 @@ class UploadFaceHandler(CommonHandler):
             self.write(res)
             return
 
-        # 有之前头像时才对比，无时不对比（因为头像有可能被服务器管理员删除）
-        if os.path.exists(original_face):
-            # 使用Pillow库打开上传的图片和原始头像
-            uploaded_image = Image.open(io.BytesIO(img['body']))
-            original_image = Image.open(original_face)
+        if self.user.face:
+            original_face = os.path.join(upload_path, self.user.face)
+            if os.path.exists(original_face):
+                # 使用Pillow库打开上传的图片和原始头像
+                uploaded_image = Image.open(io.BytesIO(img['body']))
+                original_image = Image.open(original_face)
 
-            # 检查两个图像是否相同
-            if uploaded_image.size == original_image.size and list(uploaded_image.getdata()) == list(
-                    original_image.getdata()):
-                is_same_image = True
-                # print("是同一张图片")
-            else:
-                is_same_image = False
-                # print("不是同一张图片")
+                # 检查两个图像是否相同
+                if uploaded_image.size == original_image.size and list(uploaded_image.getdata()) == list(
+                        original_image.getdata()):
+                    is_same_image = True
+                    # print("是同一张图片")
+                else:
+                    is_same_image = False
+                    # print("不是同一张图片")
 
-            # 如果是同样的头像，返回错误响应
-            if is_same_image:
-                res = dict(
-                    code=0,
-                    message="和之前头像一样就不用上传了哦!"
-                )
-                self.write(res)
-                return
+                # 如果是同样的头像，返回错误响应
+                if is_same_image:
+                    res = dict(
+                        code=0,
+                        message="和之前头像一样就不用上传了哦!"
+                    )
+                    self.write(res)
+                    return
 
         # 文件格式:时间+唯一标志+后缀
         prefix1 = datetime.datetime.now().strftime("%Y%m%d%H%M%S")

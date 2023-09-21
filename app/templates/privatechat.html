@@ -24,12 +24,16 @@
                     <button class="btn btn-outline-info my-2 my-sm-0">选择一个好友开始进行聊天吧!</button>
                 {% else %}
                     {% if handler.check_isfriends(data['friend_id']) %}
-                        <img class="mr-3 rounded-circle" src="{% if handler.get_face(data['friend_id']) %}
-                                    /static/uploads/{{ friend.face }}
-                                {% else %}
-                                    {{ static_url('images/male.jpeg') }}
-                                {% end %}" style="height: 60px ;width: 60px">
-                        <button class="btn btn-outline-info my-2 my-sm-0 delete-btn" data-delete-id="{{ data['friend_id'] }}">删除好友</button>
+                        {% for friend in handler.friends %}
+                            {% if data['friend_id']==friend.id %}
+                                <img class="mr-3 rounded-circle" src="{% if handler.get_face(data['friend_id']) %}
+                                            /static/uploads/{{ friend.face }}
+                                        {% else %}
+                                            {{ static_url('images/male.jpeg') }}
+                                        {% end %}" style="height: 60px ;width: 60px">
+                                <button class="btn btn-outline-info my-2 my-sm-0 delete-btn" data-delete-id="{{ data['friend_id'] }}">删除好友</button>
+                            {% end %}
+                        {% end %}
                     {% else %}
                         <button class="btn btn-outline-info my-2 my-sm-0">对方已经把你好友删除了，请勿打扰了哦!</button>
                         <button class="btn btn-outline-info my-2 my-sm-0 delete-btn" data-delete-id="{{ data['friend_id'] }}">删除好友</button>

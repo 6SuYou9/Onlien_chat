@@ -5,21 +5,15 @@ $(document).ready(function () {
     var name = $("#input_name").val();
     var face = $("#input_face").val();
     var user_id = parseInt($("#input_userid").val());
-    console.log(typeof(user_id))
+    // console.log(typeof(user_id))
     // 以下从页面url获取friend_id
-    // 1. 获取当前页面的URL
-    var currentPageURL = window.location.href;
-    // 2. 从URL中提取最后一个字符
-    var lastCharacter = currentPageURL.charAt(currentPageURL.length - 1);
-    // 3. 将提取的字符转换为整数
-    var lastCharacterAsInt = parseInt(lastCharacter);
-    // 打印结果，如果成功提取并转换，则输出整数值，否则输出错误信息
-    if (!isNaN(lastCharacterAsInt)) {
-        friend_id = lastCharacterAsInt
-    }else {
-        friend_id = "0"
-    }
-    console.log(typeof(friend_id))
+    // 获取当前页面的 URL
+    var currentURL = window.location.href;
+   // 使用 URL 对象解析 URL
+    var url = new URL(currentURL);
+    // 获取 friend_id 参数的值
+    var friend_id = url.searchParams.get("friend_id");
+    // console.log(friend_id)
     // 追加聊天消息框
     function append_msg(name, data) {
         var html = "";

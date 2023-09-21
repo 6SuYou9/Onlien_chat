@@ -12,6 +12,6 @@ class PrivateChatHandler(CommonHandler):
     def get(self):
         data = dict(
             title="SuYou-Online_Chat",
-            friend_id = self.get_argument("friend_id", "0")
+            friend_id = int(self.get_argument("friend_id", "0"))
         )
         self.render('privatechat.html', data=data)

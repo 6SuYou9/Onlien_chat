@@ -36,7 +36,7 @@ class UserprofileHandler(CommonHandler):
             #     若修改了昵称，则需要重新登录
             if form.data['name'] != common_user.name:
                 res['code'] = 11
-                CRUD.change_login_status(form.data['name'], 0)  # 将数据库中的登录状态设置为退出
+                CRUD.change_login_status(common_user.name, 0)  # 将数据库中的登录状态设置为退出
                 self.clear_cookie("name")  # 清除cookie
             #     否则不需要重新登录
             else:
