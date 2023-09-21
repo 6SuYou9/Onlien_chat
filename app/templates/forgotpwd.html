@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block content %}
+            <div class="card">
+                <div class="card-header" >找回密码</div>
+                <div class="card-body">
+                    <form id="form-data">
+                        <div class="form-group">
+                            {% raw xsrf_form_html()%}
+                            <label style="margin-left: 200px;">昵称</label>
+                            <input type="text" name="name" class="form-control form-width" placeholder="请输入账号！" style="margin-left: 200px;">
+                            <p class="text-danger" id="error_name" style="margin-left: 200px;"></p>
+                        </div>
+                        <div class="form-group">
+                            <label style="margin-left: 200px;">邮箱</label>
+                            <input type="email" name="email" class="form-control form-width" placeholder="请输入邮箱！" style="margin-left: 200px;">
+                            <p class="text-danger" id="error_email" style="margin-left: 200px;"></p>
+                        </div>
+                        <div class="form-group">
+                            <label style="margin-left: 200px;">手机号码</label>
+                            <input type="text" name="phone" class="form-control form-width" placeholder="请输入手机号码！" style="margin-left: 200px;">
+                            <p class="text-danger" id="error_phone" style="margin-left: 200px;"></p>
+                        </div>
+                        <div class="form-group">
+                            <label style="margin-left: 200px;">新密码</label>
+                            <input type="password" name="pwd" class="form-control form-width" placeholder="请输入密码！" style="margin-left: 200px;">
+                            <p class="text-danger" id="error_pwd" style="margin-left: 200px;"></p>
+                        </div>
+                        <div class="form-group">
+                            <label style="margin-left: 200px;">确认新密码</label>
+                            <input type="password" name="repwd" class="form-control form-width" placeholder="请输入确认密码！" style="margin-left: 200px;">
+                            <p class="text-danger" id="error_repwd" style="margin-left: 200px;"></p>
+                        </div>
+                        <div class="form-group">
+                            <label style="margin-left: 200px;">邮箱验证码</label>
+                            <input type="text" name="yanzheng_code" class="form-control form-width" placeholder="请输入邮箱验证码！" style="margin-left: 200px;">
+                            <p class="text-danger" id="error_yanzheng_code" style="margin-left: 200px;"></p>
+                        </div>
+                        <div class="form-group">
+                            <a href="javascript:void(0);" id="send_email" class="btn btn-danger" style="margin-left: 450px;">发送验证码</a>
+                        </div>
+                        <div class="form-group">
+                            <a href="javascript:void(0);" id="btn-sub" class="btn btn-info" style="margin-left: 475px;">修改</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+{% end %}
+
+{% block foot %}
+<script>
+    $(document).ready(function (){
+        send_email('/sendemail/',['name','pwd','repwd','email','phone'],'验证码发送成功');
+        request('/forgotpwd.html','/login.html',['name','pwd','repwd','email','phone','yanzheng_code'],"修改密码成功!");
+    })
+</script>
+{% end %}

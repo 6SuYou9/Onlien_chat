@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--指定网页支持响应式：电脑和手机自适应-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ data['title'] }}</title>
+    <link rel="stylesheet" href="{{static_url('dist/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{static_url('css/common.css')}}">
+    <!-- 实现页脚音乐播放器 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+    {% block head %}{% end %}
+</head>
+<body>
+<canvas id="canvas" style="background-color: black;"></canvas>  <!--页面背景代码瀑布流效果-->
+<div class="container-fluid">
+    <nav class="navbar navbar-dark bg-info justify-content-between">
+        <a class="navbar-brand" id="site_name" href="/groupchat.html">SuYou-Online_Chat</a>
+        <form class="form-inline">
+            {% if handler.user %}
+            <a href="/logout/" class="btn btn-dark my-2 my-sm-0">退出登录</a>
+            {% else %}
+            <a href="/login.html" class="btn btn-success my-2 my-sm-0">登录</a>
+            <a href="/regist.html" class="btn btn-dark my-2 my-sm-0">注册</a>
+            {% end %}
+        </form>
+    </nav>
+</div>
+
+<div class="container-fluid" id="main">
+    <div class="row">
+        <div class="col-md-3" style="margin-left: 40px;">
+            <div class="card" style="position: fixed; width: 350px">
+                <div class="card-header d-flex align-items-center justify-content-center" style="height: 70px">
+                    {% if handler.user %}
+                        <a id="show_face" href="/userprofile.html">
+                            <img class="mr-3 rounded-circle" src="{% if handler.user.face %}
+                                                        /static/uploads/{{ handler.user.face }}
+                                                   {% else %}
+                                                        {% if handler.user.sex==2 %}{{ static_url('images/female.jpeg') }}{% else %}{{ static_url('images/male.jpeg') }}{% end %}
+                                                   {% end %}" style="height: 60px ;width: 60px">
+                        </a>
+                        <div class="media-body">
+                            <a href="/userprofile.html" class="text-dark">{{ handler.name }}</a>
+                        </div>
+                    {% else %}
+                        &nbsp;欢迎使用    SuYou-Online_Chat
+                    {% end %}
+                </div>
+                <div class="card-body">
+                    {% if handler.user %}
+                        <div class="friend-list-container">
+                            <div class="friend-list-head">
+                                <h4>好友列表</h4>
+                            </div>
+                            {% if handler.friends %}
+                                <div class="friend-list">
+                                    {% for friend in handler.friends %}
+                                       <div class="media">
+                                           <a href="privatechat.html?friend_id={{ friend.id }}">
+                                                <img class="mr-3 rounded-circle" src="{% if friend.face %}
+                                                                            /static/uploads/{{ friend.face }}
+                                                                        {% else %}
+                                                                            {% if friend.sex==2 %}{{ static_url('images/female.jpeg') }}{% else %}{{ static_url('images/male.jpeg') }}{% end %}
+                                                                        {% end %}" style="height: 60px ;width: 60px">
+                                            </a>
+                                                <div class="media-body">
+                                                    <h6 class="user-nickname text-dark">{{ friend.name }}</h6>
+                                                    <button class="btn btn-outline-info private_chat-btn" style="height: 30px" data-friend-id="{{ friend.id }}">
+                                                       <a href="privatechat.html?friend_id={{ friend.id }}">
+                                                           <span id="latest-message-dot-{{ friend.id }}" class="notification-dot"></span>
+                                                           <p id="latest-message-{{ friend.id }}" class="text-ellipsis"></p>
+<!--                                                                <p class="text-ellipsis"> 大佬大佬，计算机语言哪个好学哦？</p>-->
+                                                       </a>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                    {% end %}
+                                    <div class="empty-fill"></div>
+                                </div>
+                            {% else %}
+                            <div class="friend-list">
+                                <!-- 在这里添加占位文本或其他占位元素 -->
+                                <h4>您目前没有好友哦!快去添加好友!</h4>
+                            </div>
+                            {% end %}
+                            <div class="friend-list-foot">
+                                <h4></h4>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="media">
+                            <img class="mr-3 rounded-circle" src="{{ static_url('images/female.jpeg') }}" style="height: 60px ;width: 60px">
+                            <div class="media-body">
+                                <h6 class="user-nickname text-dark">菜鸡学员</h6>
+                                <div class="alert alert-info" role="alert" style="height: 40px">
+                                    <p class="text-ellipsis"> 大佬大佬，计算机语言哪个好学哦？</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <img class="mr-3 rounded-circle" src="{{ static_url('images/male.jpeg') }}" style="height: 60px ;width: 60px">
+                            <div class="media-body">
+                                <h6 class="user-nickname text-dark">菜狗大佬</h6>
+                                <div class="alert alert-info" role="alert" style="height: 40px">
+                                    <p class="text-ellipsis"> 人生苦短，我用Python!</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% end %}
+                    <table class="table table-sm">
+                        <tr>
+                            {% if handler.user %}
+                            <td>
+                                <a href="/showapply.html" class="btn btn-outline-info my-2 my-sm-0" style="margin-left: 40px">好友申请</a>
+                            </td>
+                            <td>
+                                <a href="/addfriend.html" class="btn btn-outline-info my-2 my-sm-0" style="margin-left: 10px">添加好友</a>
+                            </td>
+                            {% else %}
+
+                            {% end %}
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 pad-right" style="margin-left: 10px;">
+            {% block content %}{% end %}
+        </div>
+    </div>
+</div>
+
+<!--音乐播放器
+server为自己用的音乐平台   如 netease (网易云)、tencent (QQ 音乐)
+id为自己创建的歌单，不能为我喜欢的的音乐，id为十位
+开启吸底模式 fixed=“true”, 开启迷你模式 mini=“true”, 随机播放 order=“random”, 关闭底部歌词 lrc-type=“0”
+-->
+<meting-js
+    server="netease"
+    type="playlist"
+    id="7360465359"
+    fixed="true"
+    mini="true"
+    order="random"
+    loop="all"
+    preload="auto"
+    lrc-type="0"
+    list-folded="false">
+</meting-js>
+
+<!--获取最新聊天信息，实现好友消息的实时刷新-->
+{% if handler.user %}
+    <script>
+    // 从 sessionStorage 中获取 idArray
+    var idArrayString = sessionStorage.getItem('idArray');
+    if (idArrayString) {
+        idArray = JSON.parse(idArrayString);
+    }else {
+        idArray = [];
+    }
+function refreshLatestMessage() {
+    var handlerId = {{ handler.id }};  // 使用模板引擎获取handler.id的值
+    {% for friend in handler.friends %}
+        (function() {   // 使用匿名函数将 friendId 传递给它，以确保每个 AJAX 请求都有自己独立的 friendId 值，从而避免了异步问题导致每次只更新一个好友消息
+            var friendId = {{ friend.id }};  // 使用模板引擎获取friend.id的值
+
+            // 使用AJAX从服务器获取最新消息，将参数添加到URL中发送到获取聊天信息的通道
+            $.ajax({
+                url: '/get_latest_message?friend_id=' + friendId + '&handler_id=' + handlerId,
+                type: 'GET',
+                success: function (data) {
+                    data = JSON.parse(data);
+                    var latestMessage = data.latestMessage;
+                    var latest_message_id = data.latest_message_id;
+                    // 检查最新消息是否与之前存储的消息相同
+                    if (idArray.indexOf(latest_message_id) === -1) {
+                        // ID 不存在于数组中,说明返回的是新消息，可以更新<p>标签的内容
+                        $('#latest-message-' + friendId).html(latestMessage);
+                        console.log("更新了"+'#latest-message-' + friendId+"的内容")
+                        // 显示红点
+                        // $('#latest-message-dot-' + friendId + '.notification-dot').addClass('active');
+                        $('#latest-message-dot-' + friendId + '.notification-dot').css('display', 'block');
+                        console.log("更新了"+'#latest-message-dot-' + friendId+"的小红点")
+                        // 更新最新消息记录
+                        idArray.push(latest_message_id);
+                        // 将 idArray 存储到 localStorage
+                        sessionStorage.setItem('idArray', JSON.stringify(idArray));
+                    } else {  // 说明返回的不是新消息,不设置小红点提示
+                        $('#latest-message-' + friendId).html(latestMessage);
+                        console.log("更新了"+'#latest-message-' + friendId+"的内容")
+                        // 隐藏小红点
+                        // $('#latest-message-dot-' + friendId).css('display', 'none');
+                    }
+                },
+                error: function (error) {
+                    console.log('Ajax request failed:', error);
+                }
+            });
+        })();
+    {% end %}
+}
+    // 每隔一段时间调用一次刷新函数
+    setInterval(refreshLatestMessage, 3000);  // 5000毫秒（5秒）刷新一次
+
+</script>
+{% end %}
+<script src="{{static_url('js/bgscript.js')}}"></script>   <!--页面背景代码瀑布流效果-->
+<script src="https://cdn.bootcss.com/lazysizes/4.0.2/lazysizes.min.js"></script>
+<script src="https://cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="{{static_url('js/request.js')}}"></script><!--实现发送请求-->
+{% block foot %}{% end %}
+</body>
+</html>

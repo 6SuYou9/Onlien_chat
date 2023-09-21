@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ static_url('ue/third-party/SyntaxHighlighter/shCoreDefault.css')}}">
+<script src="{{ static_url('ue/third-party/SyntaxHighlighter/shCore.js')}}"></script>
+<script type="text/javascript" charset="utf-8" src="{{static_url('ue/ueditor.config.js')}}"></script>
+<script type="text/javascript" charset="utf-8" src="{{static_url('ue/ueditor.all.min.js')}}"></script>
+<script type="text/javascript" charset="utf-8" src="{{static_url('ue/lang/zh-cn/zh-cn.js')}}"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+{% end %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="display: flex; justify-content: center; align-items: center;">
+        <li class="breadcrumb-item active" aria-current="page">Online Private Chat</li>
+    </ol>
+</nav>
+
+<div class="row" style="margin-top: 12px;">
+    <div class="col-md-12">
+        <div class="card" id="chat-card">
+            <div class="card-header">
+                {% if data['friend_id']=="0" %}
+                    <button class="btn btn-outline-info my-2 my-sm-0">选择一个好友开始进行聊天吧!</button>
+                {% else %}
+                    {% if handler.check_isfriends(data['friend_id']) %}
+                        <img class="mr-3 rounded-circle" src="{% if handler.get_face(data['friend_id']) %}
+                                    /static/uploads/{{ friend.face }}
+                                {% else %}
+                                    {{ static_url('images/male.jpeg') }}
+                                {% end %}" style="height: 60px ;width: 60px">
+                        <button class="btn btn-outline-info my-2 my-sm-0 delete-btn" data-delete-id="{{ data['friend_id'] }}">删除好友</button>
+                    {% else %}
+                        <button class="btn btn-outline-info my-2 my-sm-0">对方已经把你好友删除了，请勿打扰了哦!</button>
+                        <button class="btn btn-outline-info my-2 my-sm-0 delete-btn" data-delete-id="{{ data['friend_id'] }}">删除好友</button>
+                    {% end %}
+                {% end %}
+            </div>
+            <div class="card-body" id="chat-list">
+                <!--                展示聊天信息                -->
+            </div>
+        </div>
+    </div>
+    {% if data['friend_id']!="0" %}
+        <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form id="form-data" action="">
+                    <div class="media">
+                        {% if handler.user %}
+                        <img class="mr-3 rounded-circle" src="{% if handler.user.face %}
+                                                        /static/uploads/{{ handler.user.face }}
+                                                   {% else %}
+                                                        {% if handler.user.sex==2 %}{{ static_url('images/female.jpeg') }}{% else %}{{ static_url('images/male.jpeg') }}{% end %}
+                                                   {% end %}" style="height: 60px ;width: 60px">
+                        <div class="media-body">
+                            <h6>{{ handler.name }}</h6>
+                            <input type="hidden" name="name" id="input_name" value="{{ handler.name }}">
+                            <input type="hidden" name="face" id="input_face" value="/static/uploads/{{ handler.user.face }}">
+                            <input type="hidden" name="user_id" id="input_userid" value="{{ handler.id }}">
+                            <textarea name="content" id="editor" style="width: 100%;"></textarea>
+                        </div>
+                        {% end %}
+                    </div>
+                    <a style="margin-top: 12px;" class="btn btn-success float-right" href="javascript:void(0);" id="send_msg">发送消息</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% end %}
+
+</div>
+{% end %}
+
+{% block foot %}
+<script>
+    var ue = UE.getEditor('editor', {
+        toolbars: [
+            ['fullscreen', 'emotion','insertcode','preview']
+        ]
+    });
+</script>
+{% if handler.name %}
+    <script src="{{ static_url('js/handle_friend.js')}}"></script>    <!--处理好友申请和删除好友-->
+    <script src="{{ static_url('js/private_chat.js')}}"></script>
+{% end %}
+{% end %}

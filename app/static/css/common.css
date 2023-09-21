@@ -1,0 +1,292 @@
+* {
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+.card {
+    box-shadow: 2px 2px 1px #ccc;
+}
+
+.hr-dv {
+    margin-bottom: 12px;
+}
+
+#site_name {
+    color: white;
+    font-weight: bold;
+}
+
+#main {
+    margin-top: 12px;
+}
+
+#carouselExampleIndicators {
+    margin-bottom: 12px;
+}
+
+#user-list, #chat-list {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 600px;
+}
+
+#user-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+#user-list::-webkit-scrollbar-track {
+    background-color: #fff;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+    border: 1px solid #ccc;
+}
+
+#user-list::-webkit-scrollbar-thumb {
+    background-color: #F90;
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .4) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .4) 50%, rgba(255, 255, 255, .4) 75%, transparent 75%, transparent);
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+}
+
+#chat-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+#chat-list::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+}
+
+#chat-list::-webkit-scrollbar-thumb {
+    background-color: #FFF;
+    background-image: -webkit-gradient(linear, 40% 0%, 75% 84%, from(#4D9C41), to(#19911D), color-stop(.6, #54DE5D));
+    -webkit-border-radius: 2em;
+    -moz-border-radius: 2em;
+    border-radius: 2em;
+}
+
+#chat-list .alert {
+    padding: 6px;
+}
+
+#user-list > div {
+    margin-bottom: 6px;
+}
+
+.user-nickname {
+    font-style: italic;
+    color: #ccc;
+}
+
+.pad-left {
+    padding-left: 6px;
+}
+
+.pad-right {
+    padding-right: 6px;
+}
+
+.art-list {
+    margin-bottom: 12px;
+}
+
+hr {
+    margin-top: 12px;
+    margin-bottom: 0px;
+}
+
+.art-hr {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.mb-3, .my-3 {
+    margin-bottom: 12px !important;
+}
+
+.card {
+    margin-bottom: 12px;
+}
+
+.form-width {
+    width: 60%;
+}
+
+.user-info {
+    color: #007bff !important;
+    margin-bottom: 12px;
+}
+
+.card {
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*width: 100%; !* 让卡片宽度与页面宽度相等 *!*/
+    /*background-color: white; !* 更改卡片的背景颜色 *!*/
+    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); !* 添加阴影效果 *!*/
+    /*padding: 10px; !* 添加一些内边距 *!*/
+}
+
+.card-header, .card-footer {
+    padding: 12px;
+    text-align: center;
+}
+
+.card-body {
+    padding: 12px;
+}
+
+.foot-section {
+    background-color: transparent;
+    margin-bottom: 0px;
+    padding: 4rem 0rem;
+}
+
+.blur-up {
+    -webkit-filter: blur(5px);
+    filter: blur(5px);
+    transition: filter 400ms, -webkit-filter 400ms;
+}
+
+.blur-up.lazyloaded {
+    -webkit-filter: blur(0);
+    filter: blur(0);
+}
+
+#chat-list p {
+    margin-bottom: 0px;
+}
+
+/*聊天*/
+
+#canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; /* 宽度设置为100%以占满整个页面 */
+    height: 100%; /* 高度设置为100%以占满整个页面 */
+    background-color: black;
+    z-index: -1; /* 将 canvas 放在最下层 */
+}
+
+
+/* 自定义滚动条样式 */
+.custom-scrollbar {
+    max-height: 250px; /* 容器的最大高度 */
+    overflow-y: auto; /* 显示垂直滚动条 */
+    overflow-x: hidden; /* 隐藏横向滚动条 */
+    scrollbar-width: thin; /* 设置滚动条宽度 */
+    scrollbar-color: #29c4b6 #19cca3; /* 设置滚动条颜色（可以自行调整颜色值） */
+}
+
+/* 滚动条轨道 */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px; /* 滚动条宽度 */
+}
+
+/* 滚动条滑块 */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #237e58; /* 滚动条滑块颜色 */
+}
+
+
+/* 好友列表容器 */
+.friend-list-container {
+    display: flex;
+    flex-direction: column;
+    /*max-height: 800px;*/
+}
+
+/* 好友列表 */
+.friend-list {
+    height: 400px;
+    /*max-height: 400px;*/
+    overflow-y: auto; /* 显示垂直滚动条 */
+    overflow-x: hidden; /* 隐藏横向滚动条 */
+    scrollbar-width: thin; /* 设置滚动条宽度 */
+    scrollbar-color: #29c4b6 #19cca3; /* 设置滚动条颜色（可以自行调整颜色值） */
+    flex-grow: 1; /* 自动填充剩余空间 */
+}
+
+/* 空白填充项 */
+.empty-fill {
+    flex-grow: 1; /* 自动填充剩余空间 */
+    /* 添加一些样式，例如背景色或边框，以便美观显示 */
+}
+
+/*好友列表标题样式*/
+.friend-list-head {
+    background-color: #678cb3;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.friend-list-foot {
+    background-color: #678cb3;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-size: 5px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+
+/* 添加红点样式 */
+.notification-dot {
+    background-color: red; /* 红色背景 */
+    width: 8px; /* 宽度 */
+    height: 8px; /* 高度 */
+    border-radius: 50%; /* 圆形 */
+    margin-left: 5px; /* 根据需要调整位置 */
+    margin-bottom: 3px; /* 根据需要调整位置 */
+    /*display: none; !* 初始隐藏 *!*/
+}
+
+
+/*截断文本，并在文本溢出时显示省略号      左侧显示好友列表时使用*/
+.text-ellipsis {
+    white-space: nowrap; /* 防止文本换行 */
+    overflow: hidden;    /* 隐藏溢出的部分 */
+    text-overflow: ellipsis; /* 显示省略号 */
+    width: 200px; /* 可根据需要设置固定宽度 */
+    position: relative; /* p标签相对定位容器 */
+}
+
+
+.btn{
+    position: relative;
+}
+
+.btn .notification-dot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    border-radius: 50%;
+    z-index: 1;
+    /*display: block;*/
+    display: none; /* 初始状态隐藏 */
+}
+/* 当有新消息时显示红点 */
+.btn .notification-dot.active {
+    display: inline-block; /* 显示红点 */
+}
+
+/*文本自动换行*/
+.message-content {
+    white-space: normal;
+}

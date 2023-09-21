@@ -1,0 +1,169 @@
+{% extends "layout.html" %}
+
+{% block head %}{% end %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="display: flex; justify-content: center; align-items: center;">
+        <li class="breadcrumb-item active" aria-current="page">好友申请</li>
+    </ol>
+</nav>
+
+<div class="row" style="margin-top: 12px;">
+    <div class="col-md-12">
+        <div class="card" id="chat-card1">
+            <div class="card-header">我收到的好友申请</div>
+                <div class="card-body custom-scrollbar">
+                    {% for apply in data['rece_applys'] %}
+                        {% if apply['status']=="Reviewing" %}
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="media">
+                                        <img class="mr-3" src="{% if apply['friend_face'] %} /static/uploads/{{ apply['friend_face'] }} {% else %}{{ static_url('images/female.jpeg') }}{% end %}" style="height: 60px ;width: 60px">
+                                        <div class="media-body">
+                                            <p class="user-nickname text-dark d-flex justify-content-between">
+                                                {{ apply['friend_name'] }}
+                                                <a class="btn btn-outline-warning">status: {{ apply['status'] }}</a>
+                                            </p>
+                                            <div class="alert alert-info" role="alert">
+                                                {% if apply['info'] %}{{ apply['info'] }}{% else %}无{% end %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <button class="btn btn-info approve-btn" data-friend-name="{{ apply['friend_name'] }}">同意</button>
+                                        <button class="btn btn-info reject-btn" data-friend-name="{{ apply['friend_name'] }}">拒绝</button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% end %}
+                    {% end %}
+
+                    {% for apply in data['rece_applys'] %}
+                        {% if apply['status']=="Refuse" %}
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="media">
+                                        <img class="mr-3" src="{% if apply['friend_face'] %} /static/uploads/{{ apply['friend_face'] }} {% else %}{{ static_url('images/female.jpeg') }}{% end %}" style="height: 60px ;width: 60px">
+                                        <div class="media-body">
+                                            <p class="user-nickname text-dark d-flex justify-content-between">
+                                                {{ apply['friend_name'] }}
+                                                <a class="btn btn-warning">status: {{ apply['status'] }}</a>
+                                            </p>
+                                            <div class="alert alert-info" role="alert">
+                                                {% if apply['info'] %}{{ apply['info'] }}{% else %}无{% end %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+                        {% end %}
+                    {% end %}
+
+                    {% for apply in data['rece_applys'] %}
+                        {% if apply['status']=="Accept" %}
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="media">
+                                        <img class="mr-3" src="{% if apply['friend_face'] %} /static/uploads/{{ apply['friend_face'] }} {% else %}{{ static_url('images/female.jpeg') }}{% end %}" style="height: 60px ;width: 60px">
+                                        <div class="media-body">
+                                            <p class="user-nickname text-dark d-flex justify-content-between">
+                                                {{ apply['friend_name'] }}
+                                                <a class="btn btn-success">status: {{ apply['status'] }}</a>
+                                            </p>
+                                            <div class="alert alert-info" role="alert">
+                                                {% if apply['info'] %}{{ apply['info'] }}{% else %}无{% end %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+                        {% end %}
+                    {% end %}
+                </div>
+            </div>
+        <div class="card" id="chat-card2">
+            <div class="card-header">我发出的好友申请</div>
+            <div class="card-body custom-scrollbar">
+                <!--  先展示发出的好友申请，在展示被拒绝的，最后展示接受的-->
+                {% for apply in data['send_applys'] %}
+                    {% if apply['status']=="Reviewing" %}
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="media">
+                                    <img class="mr-3" src="{% if apply['friend_face'] %} /static/uploads/{{ apply['friend_face'] }} {% else %}{{ static_url('images/female.jpeg') }}{% end %}" style="height: 60px ;width: 60px">
+                                    <div class="media-body">
+                                        <p class="user-nickname text-dark d-flex justify-content-between">
+                                            {{ apply['friend_name'] }}
+                                            <a class="btn btn-outline-warning">status: {{ apply['status'] }}</a>
+                                        </p>
+                                        <input type="hidden" name="name" value="{{ apply['friend_name'] }}">
+                                        <div class="alert alert-info" role="alert">
+                                            {% if apply['info'] %}{{ apply['info'] }}{% else %}无{% end %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    {% end %}
+                {% end %}
+
+                {% for apply in data['send_applys'] %}
+                    {% if apply['status']=="Refuse" %}
+                           <div class="row">
+                            <div class="col-md-9">
+                                <div class="media">
+                                    <img class="mr-3" src="{% if apply['friend_face'] %} /static/uploads/{{ apply['friend_face'] }} {% else %}{{ static_url('images/female.jpeg') }}{% end %}" style="height: 60px ;width: 60px">
+                                    <div class="media-body">
+                                        <p class="user-nickname text-dark d-flex justify-content-between">
+                                            {{ apply['friend_name'] }}
+                                            <a class="btn btn-danger">status: {{ apply['status'] }}</a>
+                                        </p>
+                                        <input type="hidden" name="name" value="{{ apply['friend_name'] }}">
+                                        <div class="alert alert-info" role="alert">
+                                            {% if apply['info'] %}{{ apply['info'] }}{% else %}无{% end %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    {% end %}
+                {% end %}
+
+                {% for apply in data['send_applys'] %}
+                    {% if apply['status']=="Accept" %}
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="media">
+                                    <img class="mr-3" src="{% if apply['friend_face'] %} /static/uploads/{{ apply['friend_face'] }} {% else %}{{ static_url('images/female.jpeg') }}{% end %}" style="height: 60px ;width: 60px">
+                                    <div class="media-body">
+                                        <p class="user-nickname text-dark d-flex justify-content-between">
+                                            {{ apply['friend_name'] }}
+                                            <a class="btn btn-success">status: {{ apply['status'] }}</a>
+                                        </p>
+                                        <input type="hidden" name="name" value="{{ apply['friend_name'] }}">
+                                        <div class="alert alert-info" role="alert">
+                                            {% if apply['info'] %}{{ apply['info'] }}{% else %}无{% end %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    {% end %}
+                {% end %}
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}
+
+{% block foot %}
+<script src="{{static_url('js/handle_friend.js')}}"></script>
+{% end %}
