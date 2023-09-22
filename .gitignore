@@ -159,5 +159,8 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 
-uploads/*
-!uploads/
+# 忽略uploads目录下的所有内容
+app/static/uploads/*
+
+# 不忽略uploads目录本身
+!app/static/uploads/
