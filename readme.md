@@ -72,3 +72,63 @@
     - forms.py	#	表单验证模块
     - orm.py	#	数据库连接驱动模块
     - send_email.py  # 发送邮件接口模块
+
+## 3.具体目录树结构
+  Online_Chat/（根目录） 
+- ├── app 
+- │  ├── models 
+- │  │  ├── crud.py (对数据库的各种操作)
+- │  │  └── models.py (创建数据库表)
+- │  ├── static (静态文件目录)
+- │  │  ├── css
+- │  │  │  └── common.css  (自定义添加的各种css样式)
+- │  │  ├── dist(bootstrap目录)
+- │  │  ├── images (程序中临时用到的图片)
+- │  │  │  ├── female.jpeg
+- │  │  │  └── male.jpeg
+- │  │  ├── js (自定义的js代码，帮助实现一些请求和逻辑)
+- │  │  │  ├── bgscript.js
+- │  │  │  ├── chat.js
+- │  │  │  ├── handle_friend.js
+- │  │  │  ├── private_chat.js
+- │  │  │  ├── request.js
+- │  │  │  └── uploadface.js
+- │  │  ├── ue(ue编辑器目录)
+- │  │  └── uploads (上传头像的目录)
+- │  ├── templates (页面模板目录)
+- │  │  ├── layout.html 	(模板页面)
+- │  │  ├── addfriend.html 	(添加好友页面)
+- │  │  ├── chat.html 	(聊天室页面)
+- │  │  ├── forgotpwd.html 	(忘记密码页面)
+- │  │  ├── login.html 	(登录页面)
+- │  │  ├── privatechat.html 	(私聊页面)
+- │  │  ├── regist.html	 (注册页面)
+- │  │  ├── showapply.html 	(展示好友申请页面)
+- │  │  └── userprofile.html	 (个人页面)
+- │  ├── tools (用到的一些工具)
+- │  │  ├── forms.py	 (表单验证)
+- │  │  ├── orm.py 		(连接数据库)
+- │  │  ├── send_emails.py	 (发送邮件)
+- │  ├── views (路由映射的视图(类))
+- │  │  ├── views_common.py 	(模板视图(类)，除了通信的两个视图，其他视图均继承自此视图)
+- │  │  ├── views_addfriend.py	 (添加好友逻辑)
+- │  │  ├── views_chat.py 		(返回聊天页面)
+- │  │  ├── views_forgotpwd.py 	(忘记密码处理逻辑)
+- │  │  ├── views_getlatestmsg.py 	(获取最新聊天消息逻辑)
+- │  │  ├── views_group_chatroom.py 	(聊天室通信逻辑SockJs)
+- │  │  ├── views_login.py 		(登录逻辑)
+- │  │  ├── views_logout.py 		(退出登录逻辑)
+- │  │  ├── views_msg.py 		(返回历史聊天消息)
+- │  │  ├── views_private_chat.py	 (返回私聊页面)
+- │  │  ├── views_private_chatroom.py 	(私聊通信逻辑websocket)
+- │  │  ├── views_regist.py 		(注册逻辑)
+- │  │  ├── views_sendemail.py 	(发送邮件逻辑)
+- │  │  ├── views_showapply.py	 (处理好友申请逻辑)
+- │  │  ├── views_uploadface.py	 (上传头像逻辑)
+- │  │  └── views_userprofile.py 	(个人信息页面)
+- │  ├── __init__.py 	(配置程序的运行端口以及启动)
+- │  ├── configs.py 	(程序运行配置文件)
+- │  └── urls.py 	(路由映射设置)
+- ├── main.py (程序运行文件)
+- ├── readme.md
+- └── requirements.txt (程序用到的依赖包)
