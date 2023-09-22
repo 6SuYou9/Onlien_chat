@@ -160,7 +160,7 @@ cython_debug/
 .idea/
 
 # 忽略uploads目录下的所有内容
-app/static/uploads/*
+app/static/uploads/*.jpg
+app/static/uploads/*.png
+app/static/uploads/*.jpeg
 
-# 不忽略uploads目录本身
-!app/static/uploads/
