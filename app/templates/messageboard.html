@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ static_url('ue/third-party/SyntaxHighlighter/shCoreDefault.css')}}">
+<script src="{{ static_url('ue/third-party/SyntaxHighlighter/shCore.js')}}"></script>
+<script type="text/javascript" charset="utf-8" src="{{static_url('ue/ueditor.config.js')}}"></script>
+<script type="text/javascript" charset="utf-8" src="{{static_url('ue/ueditor.all.min.js')}}"></script>
+<script type="text/javascript" charset="utf-8" src="{{static_url('ue/lang/zh-cn/zh-cn.js')}}"></script>
+{% end %}
+
+{% block content %}
+    <!--发送留言-->
+    <div class="card">
+        <div class="card-body">
+            <form id="form-data" action="">
+                <div class="media">
+                        <img class="mr-3 rounded-circle" src="{% if handler.user.face %}
+                                                        /static/uploads/{{ handler.user.face }}
+                                                   {% else %}
+                                                        {% if handler.user.sex==2 %}{{ static_url('images/female.jpeg') }}{% else %}{{ static_url('images/male.jpeg') }}{% end %}
+                                                   {% end %}" style="height: 60px ;width: 60px">
+                        <div class="media-body">
+                            <h6>{{ handler.name }}</h6>
+                            <input type="hidden" name="name" id="input_name" value="{{ handler.name }}">
+                            <input type="hidden" name="face" id="input_face" value="/static/uploads/{{ handler.user.face }}">
+                            <input type="hidden" name="user_id" id="input_userid" value="{{ handler.id }}">
+                            <textarea name="content" id="editor" style="width: 100%;"></textarea>
+                        </div>
+                </div>
+                <div style="text-align: center;">
+                    <p>提示：注意每个用户每天只可以发一次留言哦!</p>
+                    <a class="btn btn-success" style="position: absolute; bottom: 0; right: 0;" href="javascript:void(0);" id="send_msg">发送留言</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--显示留言-->
+    <div class="card">
+        <div class="card-header">Message Board</div>
+        <div class="card-body" id="chat-list">
+            {% for message in data['messages']%}
+                {% if int(message['user_id'])!=handler.id %}
+                <!--不是自己发的-->
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="media">
+                            <img class="mr-3 rounded-circle" style='width: 60px;height: 60px;' src="{% if message['face'] %}-->
+    <!--                                                        /static/uploads/{{ message['face'] }}-->
+    <!--                                                   {% else %}-->
+    <!--                                                        {{ static_url('images/female.jpeg') }}-->
+    <!--                                                   {% end %}" style="height: 60px ;width: 60px">
+                            <div class="media-body">
+                                <h6 class="user-nickname text-dark"> {{ message['name'] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{{ message['dt'] }}]</h6>
+                                <div class="alert alert-info" role="alert">
+                                    {% raw message['content'] %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                {% else %}
+                <!--是自己发的-->
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-9">
+                        <div class="media">
+                            <div class="media-body">
+                                <h6 class="user-nickname text-right text-dark">[{{ message['dt'] }}]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ message['name'] }}</h6>
+                                <div class="alert alert-success" role="alert">
+                                    {% raw message['content'] %}
+                                </div>
+                            </div>
+                            <img class="ml-3 rounded-circle" style='width: 60px;height: 60px;' src="{% if message['face'] %}-->
+    <!--                                                        /static/uploads/{{ message['face'] }}-->
+    <!--                                                   {% else %}-->
+    <!--                                                        {{ static_url('images/female.jpeg') }}-->
+    <!--                                                   {% end %}" style="height: 60px ;width: 60px">
+                        </div>
+                    </div>
+                </div>
+                {% end %}
+            {% end %}
+        </div>
+    </div>
+
+{% end %}
+
+{% block foot %}
+<script>
+    var ue = UE.getEditor('editor', {
+        toolbars: [
+            ['fullscreen', 'emotion','insertcode','preview']
+        ]
+    });
+</script>
+<script src="{{ static_url('js/messageboard.js')}}"></script>
+{% end %}

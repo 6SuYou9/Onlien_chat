@@ -1,0 +1,7 @@
+mysql-connector-python~=8.1.0
+SQLAlchemy~=2.0.20
+WTForms~=3.0.1
+zmail~=0.2.8
+werkzeug~=2.3.7
+tornado~=6.3.3
+Pillow~=10.0.1

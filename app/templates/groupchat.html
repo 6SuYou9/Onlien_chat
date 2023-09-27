@@ -1,0 +1,109 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ static_url('ue/third-party/SyntaxHighlighter/shCoreDefault.css')}}">
+<script src="{{ static_url('ue/third-party/SyntaxHighlighter/shCore.js')}}"></script>
+<script type="text/javascript" charset="utf-8" src="{{static_url('ue/ueditor.config.js')}}"></script>
+<script type="text/javascript" charset="utf-8" src="{{static_url('ue/ueditor.all.min.js')}}"></script>
+<script type="text/javascript" charset="utf-8" src="{{static_url('ue/lang/zh-cn/zh-cn.js')}}"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+{% end %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb" style="display: flex; justify-content: center; align-items: center;">
+        <li class="breadcrumb-item active" aria-current="page">Online Chat</li>
+    </ol>
+</nav>
+
+<div class="row" style="margin-top: 12px;">
+    <div class="col-md-12">
+        <div class="card" id="chat-card">
+<!--            <div class="card-header">聊天消息</div>-->
+            <div class="card-body" id="chat-list">
+                <!-- 如果是游客只显示示例消息  -->
+                {% if not handler.name %}
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="media">
+                                <img class="mr-3" src="{{ static_url('images/female.jpeg') }}" style="height: 60px ;width: 60px">
+                                <div class="media-body">
+                                    <h6 class="user-nickname text-dark">菜鸡学员</h6>
+                                    <div class="alert alert-info" role="alert">
+                                        大佬大佬，计算机语言哪个好学哦？
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-9">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h6 class="user-nickname text-right text-dark">菜狗大佬</h6>
+                                    <div class="alert alert-success" role="alert">
+                                        人生苦短，我用Python!
+                                    </div>
+                                </div>
+                                <img class="ml-3" src="{{ static_url('images/male.jpeg') }}" style="height: 60px ;width: 60px">
+                            </div>
+                        </div>
+                    </div>
+                {% end %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form id="form-data" action="">
+                    <div class="media">
+                        {% if handler.user %}
+                        <img class="mr-3 rounded-circle" src="{% if handler.user.face %}
+                                                        /static/uploads/{{ handler.user.face }}
+                                                   {% else %}
+                                                        {% if handler.user.sex==2 %}{{ static_url('images/female.jpeg') }}{% else %}{{ static_url('images/male.jpeg') }}{% end %}
+                                                   {% end %}" style="height: 60px ;width: 60px">
+                        <div class="media-body">
+                            <h6>{{ handler.name }}</h6>
+                            <input type="hidden" name="name" id="input_name" value="{{ handler.name }}">
+                            <input type="hidden" name="face" id="input_face" value="/static/uploads/{{ handler.user.face }}">
+                            <input type="hidden" name="user_id" id="input_userid" value="{{ handler.id }}">
+                            <textarea name="content" id="editor" style="width: 100%;"></textarea>
+                        </div>
+                        {% else %}
+                        <img class="mr-3 rounded-circle" src="{{ static_url('images/male.jpeg') }}" style="height: 60px ;width: 60px">
+                        <div class="media-body">
+                            <h6>
+                                游客&nbsp;
+                                <a href="/login.html">[登录]</a>&
+                                <a href="/regist.html">[注册]</a>
+                            </h6>
+                            <input type="hidden" name="name" id="input_name" value="游客">
+                            <input type="hidden" name="face" id="input_face" value="{{ static_url('images/male.jpeg') }}">
+                            <textarea name="content" id="editor" style="width: 100%;"></textarea>
+                        </div>
+                        {% end %}
+                    </div>
+                    <a style="margin-top: 12px;" class="btn btn-success float-right" href="javascript:void(0);" id="send_msg">发送消息</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}
+
+{% block foot %}
+<script>
+    var ue = UE.getEditor('editor', {
+        toolbars: [
+            ['fullscreen', 'emotion','insertcode','preview']
+        ]
+    });
+</script>
+{% if handler.name %}
+<script src="{{ static_url('js/group_chat.js')}}"></script>
+{% end %}
+{% end %}

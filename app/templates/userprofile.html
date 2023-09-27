@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        个人资料
+    </div>
+    <div class="card-body">
+        <form id="form-data">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>昵称</label>
+                        {% raw xsrf_form_html() %}
+                        <input type="hidden" name="id" value="{{data['user'].id}}">
+                        <input type="text" id="show_name" value="{{data['user'].name}}" name="name" class="form-control"
+                               placeholder="请输入昵称！">
+                        <p class="text-danger" id="error_name"></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>邮箱</label>
+                        <input type="email" id="show_email" value="{{data['user'].email}}" name="email" class="form-control"
+                               placeholder="请输入邮箱！">
+                        <p class="text-danger" id="error_email"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>手机号码</label>
+                <input type="text" id="show_phone" value="{{data['user'].phone}}" name="phone" class="form-control"
+                       placeholder="请输入手机号码！">
+                <p class="text-danger" id="error_phone"></p>
+            </div>
+            <div class="form-group">
+                <label>性别</label>
+                <br>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="input_sex1" name="sex" value="1"
+                           class="custom-control-input" {% if data['user'].sex == 1 %}checked{% end %}>
+                    <label class="custom-control-label" for="input_sex1">男</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="input_sex2" name="sex" value="2"
+                           class="custom-control-input" {% if data['user'].sex == 2 %}checked{% end %}>
+                    <label class="custom-control-label" for="input_sex2">女</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="input_sex3" name="sex" value="3"
+                           class="custom-control-input" {% if data['user'].sex == 3 %}checked{% end %}>
+                    <label class="custom-control-label" for="input_sex3">保密</label>
+                </div>
+                <p class="text-danger" id="error_sex"></p>
+            </div>
+            <div class="form-group">
+                <label>个性签名</label>
+                <textarea id="show_info" class="form-control" name="info"
+                          placeholder="请输入个性签名！"
+                          rows="5"
+                >{% if data['user'].info %}{{ data['user'].info }}{% end %}</textarea>
+                <p class="text-danger" id="error_info"></p>
+            </div>
+            <div class="form-group">
+                <label for="input_face">头像</label>
+                <input type="file" class="form-control-file" id="file_face">
+                <input type="hidden" name="face" value="{% if data['user'].face%}{{ data['user'].face }}{% end %}"
+                       id="input_face">
+                <hr class="hr-dv">
+                <div id="image_face">
+                    {% if data['user'].face%}
+                    <img src="/static/uploads/{{data['user'].face}}" style="width: 200px;height: 200px">
+                    {% else %}
+                    <img data-src="holder.js/200x200">
+                    {% end %}
+                </div>
+                <hr class="hr-dv">
+                <a class="btn btn-info" id="upload_face" href="javascript:void(0)">上传头像</a>
+                <p class="text-danger" id="error_face"></p>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-primary" href="javascript:void(0)" id="btn-sub">保存信息</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% end %}
+
+{% block foot %}
+<script src="{{static_url('js/uploadface.js')}}"></script>
+<script>
+    $(document).ready(function () {
+        uploadface('face', 200, 200, '/uploadface/');
+        request("/userprofile.html","/login.html",["id","name","email","phone","info","sex"],"修改成功!")
+    });
+</script>
+
+{% end %}
