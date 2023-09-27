@@ -1,7 +1,10 @@
 # Author: Su
 # -*- coding: utf-8 -*-
+<<<<<<< HEAD
 import json
 
+=======
+>>>>>>> e877903b4bedbd5f4027d1196ff845c640b957e9
 import tornado.web
 from app.models.crud import CRUD
 
@@ -81,6 +84,7 @@ class CommonHandler(tornado.web.RequestHandler):
         # print("check_isfriends",self.name,friend_name,friend_id)
         return CRUD.check_isfriends(self.name,friend_name)
 
+<<<<<<< HEAD
     @property
     def get_MessageBoard(self):
         data = CRUD.get_messageboard()
@@ -90,3 +94,5 @@ class CommonHandler(tornado.web.RequestHandler):
             # print(type((json.loads(v.message))['user_id']))
             # print(type(self.id))
         return dict(data=result)
+=======
+>>>>>>> e877903b4bedbd5f4027d1196ff845c640b957e9

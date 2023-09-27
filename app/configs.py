@@ -2,11 +2,14 @@
 # -*- coding: utf-8 -*-
 import os  # 文件目录操作模块
 
+<<<<<<< HEAD
 
 
 def safe_filter(text):
     return tornado.escape.xhtml_unescape(text)
 
+=======
+>>>>>>> e877903b4bedbd5f4027d1196ff845c640b957e9
 # 常用配置
 # 调试模式：开发者模式，debug=true
 # 模板路径：template_path

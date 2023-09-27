@@ -2,7 +2,11 @@
 # -*- coding: utf-8 -*-
 import datetime
 from app.tools.orm import ORM
+<<<<<<< HEAD
 from app.models.models import User, Msg, Yzm, Friends, Friends_Messages, Apply_Friends,Message_board
+=======
+from app.models.models import User, Msg, Yzm, Friends, Friends_Messages, Apply_Friends
+>>>>>>> e877903b4bedbd5f4027d1196ff845c640b957e9
 from werkzeug.security import generate_password_hash
 from sqlalchemy import and_, or_
 
@@ -613,6 +617,7 @@ class CRUD(object):
         finally:
             session.close()
         return result
+<<<<<<< HEAD
 
     # 保存留言板消息
     @staticmethod
@@ -663,3 +668,5 @@ class CRUD(object):
         finally:
             session.close()
         return data
+=======
+>>>>>>> e877903b4bedbd5f4027d1196ff845c640b957e9

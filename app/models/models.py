@@ -88,6 +88,7 @@ class Friends_Messages(Base):
     sender = relationship("User", foreign_keys=[sender_id])
     receiver = relationship("User", foreign_keys=[receiver_id])
 
+<<<<<<< HEAD
 # 创建留言板模型
 class Message_board(Base):
     __tablename__ = "Message_board"
@@ -99,6 +100,8 @@ class Message_board(Base):
     # 添加外键关联
     sender = relationship("User", foreign_keys=[sender_id])
 
+=======
+>>>>>>> e877903b4bedbd5f4027d1196ff845c640b957e9
 
 if __name__ == '__main__':
     import mysql.connector  # 导入数据库连接驱动

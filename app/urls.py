@@ -17,12 +17,16 @@ from app.views.views_showapply import ShowApplyHandler as showapply             
 from app.views.views_private_chat import PrivateChatHandler as privatechat_html     # 私聊页面
 from app.views.views_getlatestmsg import GetLatestMsgHandler as getlatestmsg        # 获取最新聊天消息
 from app.views.views_private_chatroom import PrivateChatRoomHandler as privatechat  # 私聊逻辑处理
+<<<<<<< HEAD
 from app.views.views_Message_Board import Message_BoardHandler as messageboard      # 留言板逻辑处理
+=======
+>>>>>>> e877903b4bedbd5f4027d1196ff845c640b957e9
 
 
 
 # 路由视图映射:(路由地址，视图)
 urls = [
+<<<<<<< HEAD
         (r"/", login),                         # 登录界面
         (r"/regist.html", regist),            # 注册界面
         (r"/forgotpwd.html", forgotpwd),      # 忘记密码界面
@@ -39,4 +43,21 @@ urls = [
         (r"/msg/", msg),                      # 获取历史聊天信息
         (r"/uploadface/", uploadface),        # 上传头像
         (r"/sendemail/", sendemail),          # 发送邮件
+=======
+           (r"/", login),                         # 登录界面
+           (r"/regist.html", regist),            # 注册界面
+           (r"/forgotpwd.html", forgotpwd),      # 忘记密码界面
+           (r"/login.html", login),              # 登录界面
+           (r"/addfriend.html", addfriend),      # 添加好友界面
+           (r"/showapply.html", showapply),      # 展示好友申请界面
+           (r"/userprofile.html", userprofile),  # 个人信息界面
+           (r"/groupchat.html", chat),              # 聊天室界面
+           (r"/privatechat.html", privatechat_html),  # 私聊界面
+           (r'/websocket', privatechat),             # 私聊处理
+           (r"/get_latest_message", getlatestmsg), # 获取最新好友聊天消息
+           (r"/logout/", logout),                # 退出登录
+           (r"/msg/", msg),                      # 获取历史聊天信息
+           (r"/uploadface/", uploadface),        # 上传头像
+           (r"/sendemail/", sendemail),          # 发送邮件
+>>>>>>> e877903b4bedbd5f4027d1196ff845c640b957e9
        ] + SockJSRouter(chatroom, "/chatroom").urls
